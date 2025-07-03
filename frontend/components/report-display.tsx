@@ -55,7 +55,7 @@ export function ReportDisplay({ report, isLoading }: ReportDisplayProps) {
             <h3 className="text-xl font-semibold">核心观点提炼</h3>
           </div>
           <div className="space-y-3">
-            {report.coreArguments.map((argument, index) => (
+            {report.core_arguments?.map((argument, index) => (
               <div key={index} className="flex items-start gap-3">
                 <Badge variant="outline" className="mt-1">
                   {index + 1}
@@ -75,7 +75,9 @@ export function ReportDisplay({ report, isLoading }: ReportDisplayProps) {
             <h3 className="text-xl font-semibold">论证过程拆解</h3>
           </div>
           <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="text-gray-700 leading-relaxed whitespace-pre-line">{report.argumentAnalysis}</p>
+            {report.argument_analysis?.map((item, index) => (
+              <p key={index} className="text-gray-700 leading-relaxed whitespace-pre-line">{item}</p>
+            ))}
           </div>
         </section>
 
@@ -88,7 +90,7 @@ export function ReportDisplay({ report, isLoading }: ReportDisplayProps) {
             <h3 className="text-xl font-semibold">潜在问题与启发</h3>
           </div>
           <div className="space-y-3">
-            {report.criticalQuestions.map((question, index) => (
+            {report.critical_questions?.map((question, index) => (
               <div key={index} className="border-l-4 border-orange-200 pl-4">
                 <p className="text-gray-700 leading-relaxed">{question}</p>
               </div>
@@ -105,7 +107,7 @@ export function ReportDisplay({ report, isLoading }: ReportDisplayProps) {
             <h3 className="text-xl font-semibold">金句摘录</h3>
           </div>
           <div className="space-y-4">
-            {report.keyQuotes.map((quote, index) => (
+            {report.key_quotes?.map((quote, index) => (
               <blockquote key={index} className="border-l-4 border-purple-200 pl-4 italic">
                 <p className="text-gray-700 leading-relaxed">"{quote}"</p>
               </blockquote>

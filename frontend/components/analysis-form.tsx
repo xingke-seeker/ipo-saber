@@ -38,19 +38,15 @@ export function AnalysisForm({ onAnalysisStart, onAnalysisComplete, isAnalyzing 
     onAnalysisStart()
 
     try {
-      const report = await analyzeContent({
-        type: activeTab as "url" | "content",
-        data: inputContent.trim(),
-      })
+      const report = await analyzeContent({ url: inputContent.trim() })
       onAnalysisComplete(report)
     } catch (err) {
       setError(err instanceof Error ? err.message : "分析失败，请重试")
       onAnalysisComplete({
-        coreArguments: [],
-        argumentAnalysis: "",
-        criticalQuestions: [],
-        keyQuotes: [],
-        summary: "分析失败",
+        core_arguments: [],
+        argument_analysis: [],
+        critical_questions: [],
+        key_quotes: []
       })
     }
   }

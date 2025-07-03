@@ -68,6 +68,7 @@
 ## 4. 开发与协作规则
 
 - **Git提交**: 遵循 [Conventional Commits](https.www.conventionalcommits.org/) 规范编写提交信息（例如: `feat(frontend): add analysis form`）。
+- **所有 commit message 必须使用英文。**
 - **API设计**: 后端API应遵循 RESTful 风格。
 - **调试**:
     - 前端问题使用 **Chrome DevTools**。
