@@ -137,6 +137,33 @@ python3 -m uvicorn backend.app.main:app --reload
 - `--reload` 支持热重载，开发调试更方便。
 - 启动后可通过 http://127.0.0.1:8000/docs 访问自动生成的 API 文档。
 
+### 运行后端单元测试
+
+确保已安装 requirements.txt 中所有依赖（包括 pytest、pytest-asyncio、playwright）。
+
+在项目根目录下运行：
+
+```bash
+python3 -m pytest -s backend/tests/
+```
+
+- `-s` 参数可显示 print 日志输出。
+- 如需只运行某个测试文件，可指定文件路径：
+
+```bash
+python3 -m pytest -s backend/tests/test_scraper_service.py
+```
+
+---
+
+## 8. 阶段性里程碑：单元测试与依赖固化（2024-06-XX）
+
+- 编写并完善了公众号文章抓取的单元测试，覆盖正常与异常场景。
+- 解决了 pytest、playwright 及 pytest-asyncio 的环境和依赖问题。
+- 掌握了 pytest 运行 async 测试、print 日志输出等技巧。
+- 明确了 mcp 文件系统工具的绝对路径用法。
+- 所有后端测试相关依赖（pytest、pytest-asyncio、playwright）已补充进 requirements.txt，确保团队环境一致、测试可直接运行。
+
 ---
 
 > 本文档为后端开发的权威参考，建议与 rules.md、design.md 配合查阅。
