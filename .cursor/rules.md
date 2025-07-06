@@ -65,6 +65,27 @@
 - **配置管理**: 敏感信息（如 API Keys）和环境配置应通过 `backend/app/core/config.py` 读取环境变量，**严禁硬编码**。
 - **依赖管理**: 所有Python包都应记录在 `backend/requirements.txt` 文件中。
 
+### 3.1 后端核心模块及说明（务必保持结构与规范）
+
+- **API 路由层**：负责定义 RESTful API 接口，进行参数校验、权限控制、调度服务层。每个功能独立 endpoint，便于扩展和维护。
+- **数据模型（Schemas）**：使用 Pydantic 定义所有请求体和响应体，自动数据校验与文档生成，保证类型安全。
+- **服务层（Services）**：封装核心业务逻辑，包括公众号文章抓取（Playwright 实现）、AI分析（多模型工厂模式）、AI模型适配等，API 层只负责调度。
+- **AI模型工厂与适配层**：统一AI模型接口，支持多模型注册与动态选择，便于后续扩展不同大模型。
+- **配置管理（Config）**：集中管理环境变量和敏感信息，保障安全，便于多环境切换。
+- **依赖与测试体系**：所有依赖集中管理，单元测试覆盖抓取与AI分析核心流程，保障代码质量。
+
+#### 主要代码文件清单
+
+- main.py：FastAPI 应用入口，负责应用启动、路由注册、全局中间件等。
+- api/v1/endpoints/analysis.py：分析接口路由，负责接收前端请求、参数校验、调度服务层。
+- schemas/analysis.py：Pydantic 数据模型，定义请求体与响应体结构，自动校验与文档。
+- services/scraper_service.py：公众号文章抓取服务，基于 Playwright 异步实现，负责获取正文内容。
+- services/ai_service.py：AI分析服务，封装大模型（如Qwen、Gemini）API调用逻辑。
+- services/ai_factory.py：AI模型工厂，支持多模型注册与动态选择，便于扩展。
+- services/base_ai_model.py：AI模型统一接口基类，规范各模型实现。
+- services/qwen_service.py：Qwen大模型服务实现，负责Qwen API对接与结果解析。
+- core/config.py：配置与环境变量管理，集中读取API Key等敏感信息，保障安全。
+
 ## 4. 开发与协作规则
 
 - **Git提交**: 遵循 [Conventional Commits](https.www.conventionalcommits.org/) 规范编写提交信息（例如: `feat(frontend): add analysis form`）。
@@ -80,9 +101,11 @@
 ---
 *本规则由 AI 根据 `design.md` 文件生成，可随时进行修改和完善。*
 
-## 5. 里程碑记录：前端项目可正常运行（2024-06）
+## 5. 里程碑记录（2024-06）
 
-### 核心知识点总结
+### 5.1 前端项目可正常运行
+
+#### 核心知识点总结
 
 1. **技术栈与架构**
    - 使用 Next.js（App Router）+ React 19 进行前端开发，支持服务端渲染和现代路由。
@@ -97,19 +120,46 @@
    - 严格遵循 TypeScript 类型定义和 React 最佳实践。
    - 样式全部采用 Tailwind CSS，无传统 CSS 文件。
 
-### 核心组件清单
+#### 核心组件清单
 
 - `Button`、`Input`、`Label`、`Textarea`、`Tabs`、`Alert`、`Badge`、`Card`、`Separator` 等，均为 Shadcn UI 标准组件，位于 `components/ui/`。
 - 页面主功能组件：
   - `analysis-form.tsx`：用户输入与分析表单
   - `report-display.tsx`：AI 分析报告展示
 
-### 里程碑意义
+#### 里程碑意义
 
 - 前端项目已实现**完整启动、页面渲染、核心交互与组件体系搭建**，为后续功能扩展和团队协作打下坚实基础。
 - 依赖与规范已固化，便于新成员快速上手和团队长期维护。
 
-> 本节为阶段性成果记录，后续如有重大进展请继续补充。
+### 5.2 后端项目可正常运行
+
+#### 核心知识点总结
+
+1. **技术栈与架构**
+   - 使用 FastAPI 进行后端开发，支持依赖注入和自动生成的API文档。
+   - 采用 Python 3.9+ 进行后端开发，使用类型提示 (Type Hinting)。
+   - 数据模型使用 Pydantic 模型来定义，确保数据验证和API文档的准确性。
+   - 异步编程使用 `async/await` 语法，特别是I/O密集型操作（如调用外部API、网页抓取）。
+   - AI集成调用 Google Gemini API 的逻辑封装在 ai_service.py 中。
+   - 配置管理通过读取环境变量，集中读取API Key等敏感信息，保障安全。
+   - 依赖管理记录所有Python包在 requirements.txt 文件中。
+
+2. **开发规范**
+   - 后端项目已实现**完整启动、API接口、数据模型与AI集成**，为后续功能扩展和团队协作打下坚实基础。
+   - 依赖与规范已固化，便于新成员快速上手和团队长期维护。
+
+#### 核心组件清单
+
+- `main.py`：FastAPI 应用入口，负责应用启动、路由注册、全局中间件等。
+- `api/v1/endpoints/analysis.py`：分析接口路由，负责接收前端请求、参数校验、调度服务层。
+- `schemas/analysis.py`：Pydantic 数据模型，定义请求体与响应体结构，自动校验与文档。
+- `services/scraper_service.py`：公众号文章抓取服务，基于 Playwright 异步实现，负责获取正文内容。
+- `services/ai_service.py`：AI分析服务，封装大模型（如Qwen、Gemini）API调用逻辑。
+- `services/ai_factory.py`：AI模型工厂，支持多模型注册与动态选择，便于扩展。
+- `services/base_ai_model.py`：AI模型统一接口基类，规范各模型实现。
+- `services/qwen_service.py`：Qwen大模型服务实现，负责Qwen API对接与结果解析。
+- `core/config.py`：配置与环境变量管理，集中读取API Key等敏感信息，保障安全。
 
 ## 6. 工具使用注意事项
 
