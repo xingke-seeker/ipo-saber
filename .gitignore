@@ -1,0 +1,7 @@
+# 忽略日志和pid文件
+*.log
+*.pid
+backend/*.log
+backend/*.pid
+frontend/*.log
+frontend/*.pid

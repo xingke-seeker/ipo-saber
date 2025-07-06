@@ -126,6 +126,24 @@ cd backend
 pip install -r requirements.txt
 ```
 
+### 设置环境变量（API Key 等敏感信息）
+
+- 推荐将所有敏感信息（如 DASHSCOPE_API_KEY、Gemini API Key 等）通过环境变量传递，避免硬编码在代码中。
+- 可在本地开发时使用 `.env` 文件或直接在 shell 中导出变量。
+- 示例：
+
+```bash
+# 临时设置（当前 shell 有效）
+export DASHSCOPE_API_KEY=你的API密钥
+export GEMINI_API_KEY=你的Gemini密钥
+
+# 或在 .env 文件中（需配合 python-dotenv 或 Pydantic BaseSettings 自动加载）
+DASHSCOPE_API_KEY=你的API密钥
+GEMINI_API_KEY=你的Gemini密钥
+```
+
+- 启动 FastAPI 服务前，请确保相关环境变量已正确设置。
+
 ### 启动 FastAPI 服务
 
 请在项目根目录（ipo-saber）下运行：
