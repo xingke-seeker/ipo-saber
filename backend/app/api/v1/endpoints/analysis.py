@@ -50,7 +50,7 @@ def parse_ai_response(result: dict) -> dict:
 async def analyze_article(request: AnalysisRequest, model: str = Query("qwen")):
     try:
         ai_model = get_ai_model(model)
-        # 先抓取公众号文章正文
+        # 只抓取公众号文章正文
         article = await fetch_wechat_article(request.url)
         content = article.get("content", "")
         prompt = BASIC_PROMPT_TEMPLATE.format(article_content=content)

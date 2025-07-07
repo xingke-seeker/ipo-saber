@@ -7,6 +7,7 @@ export interface AnalysisReport {
 
 export interface AnalysisRequest {
   url: string
+  dataSource?: string
 }
 
 export async function analyzeContent(request: AnalysisRequest): Promise<AnalysisReport> {
