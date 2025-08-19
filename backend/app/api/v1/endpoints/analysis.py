@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
-from backend.app.schemas.analysis import AnalysisRequest, AnalysisResponse
-from backend.app.services.ai_factory import get_ai_model
-from backend.app.services.scraper_service import fetch_wechat_article
+from app.schemas.analysis import AnalysisRequest, AnalysisResponse
+from app.services.ai_factory import get_ai_model
+from app.services.scraper_service import fetch_wechat_article
 import traceback
 import json
 import logging

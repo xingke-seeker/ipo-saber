@@ -5,7 +5,7 @@ logging.basicConfig(
 )
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.app.api.v1.endpoints.analysis import router as analysis_router
+from app.api.v1.endpoints.analysis import router as analysis_router
 
 app = FastAPI()
 

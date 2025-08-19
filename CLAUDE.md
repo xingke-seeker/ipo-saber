@@ -41,14 +41,17 @@ WeChat Article Analyzer - A full-stack application that fetches WeChat articles 
 ### Backend
 ```bash
 # Install dependencies
-cd backend && pip install -r requirements.txt
+cd backend && pip3 install -r requirements.txt
 
 # Set environment variables
 export GEMINI_API_KEY=your_key
 export DASHSCOPE_API_KEY=your_key  # For Qwen
 
-# Development server
-python3 -m uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+# Development server (from project root)
+cd backend && python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+
+# Alternative from project root
+PYTHONPATH=backend python3 -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 
 # Tests
 python3 -m pytest -s backend/tests/
@@ -57,7 +60,8 @@ python3 -m pytest -s backend/tests/test_scraper_service.py
 
 ### Frontend (Current)
 ```bash
-# New frontend (recommended)
+# New frontend (recommended) - Use pnpm as lockfile indicates
+# Install pnpm if not available: npm install -g pnpm
 cd frontend_new && pnpm install && pnpm run dev
 
 # Build
@@ -66,7 +70,8 @@ pnpm run build
 # Lint
 pnpm run lint
 
-# Legacy frontend (deprecated)
+# Legacy frontend (deprecated) - Uses npm
+# Note: frontend/ uses npm, frontend_new/ uses pnpm (pnpm-lock.yaml)
 cd frontend && npm install && npm run dev
 ```
 
