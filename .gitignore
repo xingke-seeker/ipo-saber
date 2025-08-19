@@ -5,3 +5,6 @@ backend/*.log
 backend/*.pid
 frontend/*.log
 frontend/*.pid
+
+# Claude Code settings
+.claude/
